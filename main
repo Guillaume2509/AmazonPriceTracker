@@ -1,0 +1,21 @@
+from bs4 import BeautifulSoup as bs
+from urllib.request import Request, urlopen
+
+
+link = "https://www.amazon.ca/Travel-Pillow-Support-Sleeping-Airplane/dp/B07HY3S811/ref=mp_s_a_1_3?dchild=1&keywords=tallgo+travel+pillow&qid=1604188354&sr=8-3"
+
+
+headers = {
+    "User-Agent":"Chrome"
+    }
+request = Request(link, headers=headers)
+
+html = urlopen(request)
+
+
+obj = bs(html)
+
+price = int(obj.find(attrs = {"id": "priceblock_ourprice"}).text[2:].split(".")[0].replace(",",""))
+
+if price<10:
+    print("On peut acheter, le prix est de {price}/nLe liens est au {link}")
